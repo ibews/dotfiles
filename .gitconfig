@@ -1,3 +1,5 @@
 [user]
 	name = ibews
 	email = ibews@ibews.de
+[push]
+	default = simple
