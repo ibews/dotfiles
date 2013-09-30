@@ -1,0 +1,11 @@
+#!/bin/sh
+TITLE=$(zenity --entry --text="Wikipedia-Seitentitel:" 2>/dev/null)
+ID=$(zenity --entry --text="Bibtex Shorthand:" 2>/dev/null)
+WP=$(echo $TITLE | sed -e 's/\s\+/_/')
+URL=$(echo $WP | sed -e 's/^/http:\/\/de\.wikipedia\.org\/wiki\//')
+FILE="$HOME/data/pdf/wikipedia/$WP.pdf"
+wkhtmltopdf "$URL" "$FILE"
+echo $FILE
+YEAR=$(date +%Y)
+(echo "@misc{ wiki:$ID,"; echo "author = \"Wikipedia\","; echo "title = \"$TITLE – Wikipedia{,} Die freie Enzyklopädie\","; echo "year = \"$YEAR\","; echo "url = \"$URL\","; echo "note = \"[Online]\",,"; echo "filename = \"$FILE\""; echo "}") | zenity --text-info
+
